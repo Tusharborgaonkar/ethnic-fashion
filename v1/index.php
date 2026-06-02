@@ -189,7 +189,7 @@
       <div class="product-card">
         <div class="product-card-img-wrap">
           <div class="arch-classic">
-            <img src="assets/img/media-arrival.png" alt="Pastel Grey Silk Kurta Pajama Set">
+            <img src="assets/img/hero-couple.png" alt="Pastel Grey Silk Kurta Pajama Set">
           </div>
         </div>
         <div class="product-card-info">
@@ -205,7 +205,7 @@
       <div class="product-card">
         <div class="product-card-img-wrap">
           <div class="arch-classic">
-            <img src="assets/img/media-arrival.png" alt="Yellow Silk Blend Floral Printed Nehru Jacket">
+            <img src="assets/img/ethnic-hero.png" alt="Yellow Silk Blend Floral Printed Nehru Jacket">
           </div>
         </div>
         <div class="product-card-info">
@@ -274,7 +274,7 @@
       <!-- Category 3: Salwar Suit -->
       <div class="category-card">
         <div class="category-card-inner arch-classic">
-          <img src="assets/img/media-arrival.png" alt="Salwar Suit Category">
+          <img src="assets/img/lehenga-floral.png" alt="Salwar Suit Category">
           <div class="category-overlay">
             <h3 class="category-title">Salwar Suit</h3>
           </div>
@@ -300,7 +300,7 @@
       <!-- Category 5: Kurtas -->
       <div class="category-card">
         <div class="category-card-inner arch-classic">
-          <img src="assets/img/media-arrival.png" alt="Kurtas Category">
+          <img src="assets/img/hero-couple.png" alt="Kurtas Category">
           <div class="category-overlay">
             <h3 class="category-title">Kurtas</h3>
           </div>
@@ -313,7 +313,7 @@
       <!-- Category 6: Bundi Set -->
       <div class="category-card">
         <div class="category-card-inner arch-classic">
-          <img src="assets/img/media-arrival.png" alt="Bundi Set Category">
+          <img src="assets/img/ethnic-hero.png" alt="Bundi Set Category">
           <div class="category-overlay">
             <h3 class="category-title">Bundi Set</h3>
           </div>
@@ -326,7 +326,7 @@
       <!-- Category 7: Indo-Western (Men) -->
       <div class="category-card">
         <div class="category-card-inner arch-classic">
-          <img src="assets/img/media-arrival.png" alt="Indo-Western Category">
+          <img src="assets/img/lehenga-purple.png" alt="Indo-Western Category">
           <div class="category-overlay">
             <h3 class="category-title">Indo-Western</h3>
           </div>
@@ -339,7 +339,7 @@
       <!-- Category 8: Bandhgala -->
       <div class="category-card">
         <div class="category-card-inner arch-classic">
-          <img src="assets/img/media-arrival.png" alt="Bandhgala Category">
+          <img src="assets/img/hero-couple.png" alt="Bandhgala Category">
           <div class="category-overlay">
             <h3 class="category-title">Bandhgala</h3>
           </div>
@@ -368,7 +368,7 @@
       <div class="product-card">
         <div class="product-card-img-wrap">
           <div class="arch-classic">
-            <img src="assets/img/media-arrival.png" alt="Multi Color Silk Nehru Jacket & Kurta Set">
+            <img src="assets/img/ethnic-hero.png" alt="Multi Color Silk Nehru Jacket & Kurta Set">
           </div>
         </div>
         <div class="product-card-info">
@@ -416,7 +416,7 @@
       <div class="product-card">
         <div class="product-card-img-wrap">
           <div class="arch-classic">
-            <img src="assets/img/media-arrival.png" alt="Pink Silk Blend Nehru Jacket And Kurta Set">
+            <img src="assets/img/hero-couple.png" alt="Pink Silk Blend Nehru Jacket And Kurta Set">
           </div>
         </div>
         <div class="product-card-info">
@@ -438,7 +438,7 @@
       <!-- Grid of detail photos -->
       <div class="new-arrival-media">
         <div class="new-arrival-img">
-          <img src="assets/img/media-arrival.png" alt="Blue Lehenga Detail view 1">
+          <img src="assets/img/lehenga-floral.png" alt="Blue Lehenga Detail view 1">
         </div>
         <div class="new-arrival-img">
           <img src="assets/img/lehenga-purple.png" alt="Blue Lehenga Detail view 2">
@@ -482,7 +482,7 @@
             <img src="assets/img/lehenga-purple.png" alt="Instagram post 2">
           </div>
           <div class="instagram-item">
-            <img src="assets/img/media-arrival.png" alt="Instagram post 3">
+            <img src="assets/img/lehenga-purple.png" alt="Instagram post 3">
           </div>
           <div class="instagram-item">
             <img src="assets/img/hero-couple.png" alt="Instagram post 4">
