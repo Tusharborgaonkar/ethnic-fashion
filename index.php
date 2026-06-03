@@ -156,4 +156,56 @@
   </div>
 </section>
 
+<!-- BEST SELLER BEFORE/AFTER SLIDER -->
+<section class="section-padding before-after-section" style="background-color: var(--color-white); text-align: center;">
+  <div class="container" style="max-width: 900px;">
+    
+    <div class="before-after-header" style="margin-bottom: var(--spacing-md);">
+      <h2 style="font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; font-family: var(--font-display);">THE BEST SELLER</h2>
+      <p style="color: var(--color-charcoal-muted); margin-top: 10px; font-size: 1.1rem;">Handcrafted with purity your skin truly deserves.</p>
+    </div>
+
+    <div class="before-after-wrapper" id="ba-wrapper">
+      
+      <!-- Before Image (Base Layer) -->
+      <div class="before-after-image-container">
+        <img src="assets/img/slider-before.png" alt="Before" class="before-after-image" draggable="false">
+        <div class="before-after-label label-before">Before</div>
+      </div>
+
+      <!-- After Image (Clipped Overlay) -->
+      <div class="before-after-overlay" id="ba-overlay">
+        <img src="assets/img/slider-after.png" alt="After" class="before-after-image" draggable="false">
+        <div class="before-after-label label-after">After</div>
+      </div>
+
+      <!-- Drag Cursor/Handle -->
+      <div class="before-after-cursor" id="ba-cursor">
+        <div class="cursor-icon">
+          <svg viewBox="0 0 32 40" width="28" height="35" focusable="false">
+            <path d="M0 16C0 7.16344 7.16344 0 16 0C24.8366 0 32 7.16344 32 16V24C32 32.8366 24.8366 40 16 40C7.16344 40 0 32.8366 0 24V16Z" fill="#ffffff"></path>
+            <path fill="#000000" d="M11 14H13V26H11zM15 14H17V26H15zM19 14H21V26H19z"></path>
+          </svg>
+        </div>
+      </div>
+
+    </div>
+
+    <a href="shop.php" class="btn btn-primary" style="margin-top: var(--spacing-lg); padding: 12px 40px; border-radius: 8px;">Shop now</a>
+
+  </div>
+</section>
+
+<!-- EVENTS CTA SECTION -->
+<section class="section-padding" style="text-align: center; background-color: var(--color-charcoal);">
+  <div class="container">
+    <div class="event-list__cta">
+      <a href="/pages/events" class="button button-secondary button--xl event-list__cta-link btn-fill-animation" data-gsap-fill-button>
+        <span class="event-list__cta-link-text event-list__cta-link-text--desktop">View All Events</span>
+        <span class="event-list__cta-link-text event-list__cta-link-text--mobile">View All Events</span>
+      </a>
+    </div>
+  </div>
+</section>
+
 <?php include 'includes/footer.php'; ?>

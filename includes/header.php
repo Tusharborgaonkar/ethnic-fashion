@@ -12,7 +12,7 @@ $nav_theme = $is_home ? 'homepage-nav' : 'standard-nav';
   <meta name="description" content="Yahuuu makes premium, planet-positive Indian ethnic wear. Handloom silks, organic block-print cottons, and carbon-neutral heritage wear.">
   
   <!-- Core Stylesheet -->
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/style.css?v=<?php echo time(); ?>">
 </head>
 <body>
 

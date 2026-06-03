@@ -261,4 +261,65 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 
+  // ==========================================================================
+  // BEFORE-AFTER SLIDER LOGIC
+  // ==========================================================================
+  
+  const baWrapper = document.getElementById('ba-wrapper');
+  const baCursor = document.getElementById('ba-cursor');
+  
+  if (baWrapper && baCursor) {
+    let xStart, xDiff, originalOffset;
+    
+    function dragStart(event) {
+      xStart = event.clientX || (event.touches && event.touches[0].clientX);
+      if (xStart === undefined) return;
+      
+      const currentOffsetStr = getComputedStyle(baWrapper).getPropertyValue('--clip-path-offset');
+      originalOffset = parseFloat(currentOffsetStr) || 0;
+      
+      document.addEventListener('pointermove', dragMove);
+      document.addEventListener('pointerup', dragEnd);
+      document.addEventListener('touchmove', dragMove, { passive: false });
+      document.addEventListener('touchend', dragEnd);
+    }
+    
+    function dragMove(event) {
+      const clientX = event.clientX || (event.touches && event.touches[0].clientX);
+      if (clientX === undefined) return;
+      
+      xDiff = clientX - xStart;
+      let result = originalOffset + xDiff;
+      
+      // Calculate bounds
+      const initialPercentStr = getComputedStyle(baWrapper).getPropertyValue('--before-after-initial-drag-position');
+      const cursorOffsetPercent = parseFloat(initialPercentStr) || 50;
+      const containerWidth = baWrapper.offsetWidth;
+      const pixelsOffset = (cursorOffsetPercent / 100) * containerWidth;
+      
+      const negativeMax = -1 * pixelsOffset;
+      const positiveMax = containerWidth - pixelsOffset;
+      
+      if (result < negativeMax) result = negativeMax;
+      else if (result > positiveMax) result = positiveMax;
+      
+      baWrapper.style.setProperty('--clip-path-offset', `${result}px`);
+      
+      // Prevent scrolling while dragging
+      if (event.type === 'touchmove') {
+        event.preventDefault();
+      }
+    }
+    
+    function dragEnd() {
+      document.removeEventListener('pointermove', dragMove);
+      document.removeEventListener('pointerup', dragEnd);
+      document.removeEventListener('touchmove', dragMove);
+      document.removeEventListener('touchend', dragEnd);
+    }
+    
+    baCursor.addEventListener('pointerdown', dragStart);
+    baCursor.addEventListener('touchstart', dragStart, { passive: true });
+  }
+
 });

@@ -183,4 +183,64 @@ document.addEventListener("DOMContentLoaded", function() {
     );
   });
 
+  // ==========================================================================
+  // FOOTER ODOMETER / SLOT MACHINE TEXT
+  // ==========================================================================
+  const footerSlotText = document.getElementById('footer-massive-text');
+  if (footerSlotText) {
+    const text = footerSlotText.textContent.trim();
+    footerSlotText.innerHTML = '';
+    
+    // We want the text to spin 'top down'. 
+    // Top down means the letters fall downwards.
+    // If the letters fall downwards, the target character must be at the TOP of the track.
+    // So the track translates from a negative Y (showing bottom character) to Y=0 (showing top character).
+    const chars = text.split('');
+    const randomChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    
+    chars.forEach(char => {
+      const wrap = document.createElement('span');
+      wrap.className = 'slot-char-wrap';
+      
+      const track = document.createElement('span');
+      track.className = 'slot-track';
+      
+      // Target character at the TOP
+      const targetSpan = document.createElement('span');
+      targetSpan.textContent = char;
+      track.appendChild(targetSpan);
+      
+      // Add random characters below it
+      const numRandom = 5; // Spin through 5 characters
+      for (let i = 0; i < numRandom; i++) {
+        const rSpan = document.createElement('span');
+        if (char === ' ') {
+            rSpan.textContent = '\u00A0'; // non-breaking space
+        } else {
+            rSpan.textContent = randomChars.charAt(Math.floor(Math.random() * randomChars.length));
+        }
+        track.appendChild(rSpan);
+      }
+      
+      // Initially, shift the track up so the bottom character is visible
+      gsap.set(track, { y: `-${numRandom * 0.75}em` });
+      
+      wrap.appendChild(track);
+      footerSlotText.appendChild(wrap);
+    });
+    
+    // Animate tracks when footer comes into view
+    gsap.to(footerSlotText.querySelectorAll('.slot-track'), {
+      y: "0em",
+      duration: 1.5,
+      stagger: 0.1,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: footerSlotText,
+        start: "top 95%",
+        toggleActions: "play none none reverse"
+      }
+    });
+  }
+
 });

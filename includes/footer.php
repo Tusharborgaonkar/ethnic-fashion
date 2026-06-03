@@ -1,59 +1,75 @@
   <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
-      <div class="footer-top">
-        
-        <!-- Left Column: Branding and eco certification -->
-        <div>
-          <h3 class="footer-brand-title">Yahuuu<span>cotton</span></h3>
-          <p class="footer-brand-desc">
-            We believe clothing should make the planet better. Every piece is hand-tailored in India from 100% GOTS certified organic cotton.
-          </p>
-          <div class="eco-badges">
-            <span class="eco-badge">
-              <i data-lucide="leaf" style="width: 14px; height: 14px;"></i>
-              GOTS Organic
-            </span>
-            <span class="eco-badge">
-              <i data-lucide="sun" style="width: 14px; height: 14px;"></i>
-              Carbon Zero
-            </span>
+      <div class="footer-top-grid">
+        <!-- Left: Socials & Address -->
+        <div class="footer-contact">
+          <div class="footer-social-icons">
+            <a href="#" aria-label="Instagram"><i data-lucide="instagram" style="width: 20px; height: 20px;"></i></a>
+            <a href="#" aria-label="Twitter/X"><i data-lucide="twitter" style="width: 20px; height: 20px;"></i></a>
+            <a href="#" aria-label="YouTube"><i data-lucide="youtube" style="width: 20px; height: 20px;"></i></a>
+          </div>
+          <address class="footer-address">
+            12 Heritage Lane, Handloom District<br>
+            New Delhi, India
+          </address>
+          <p class="footer-contact-item">namaste@yahuuu.com</p>
+          <p class="footer-contact-item">+91 98765 43210</p>
+        </div>
+
+        <!-- Right: Links Columns -->
+        <div class="footer-links-wrapper">
+          <div class="footer-link-col">
+            <h4 class="footer-col-title">MENU</h4>
+            <ul class="footer-links-list">
+              <li><a href="shop.php">About</a></li>
+              <li><a href="shop.php">Heritage</a></li>
+              <li><a href="shop.php">Artisans</a></li>
+              <li><a href="shop.php">Collections</a></li>
+            </ul>
+          </div>
+          <div class="footer-link-col">
+            <h4 class="footer-col-title">SHOP</h4>
+            <ul class="footer-links-list">
+              <li><a href="shop.php">Kurtas</a></li>
+              <li><a href="shop.php">Nehru Jackets</a></li>
+              <li><a href="shop.php">Bandhgalas</a></li>
+              <li><a href="shop.php">Indo-Western</a></li>
+            </ul>
+          </div>
+          <div class="footer-link-col">
+            <h4 class="footer-col-title">CART</h4>
+            <ul class="footer-links-list">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Contact</a></li>
+              <li><a href="#">Terms</a></li>
+              <li><a href="#">Tutorials</a></li>
+            </ul>
           </div>
         </div>
-
-        <!-- Center Column: Quick Navigation Links -->
-        <div>
-          <h4 class="footer-column-title">Products</h4>
-          <ul class="footer-links">
-            <li><a href="shop.php" class="footer-link">Organic Tees</a></li>
-            <li><a href="shop.php" class="footer-link">Linen Trousers</a></li>
-            <li><a href="shop.php" class="footer-link">Heavyweight Hoodies</a></li>
-            <li><a href="shop.php" class="footer-link">Shop All Catalog</a></li>
-          </ul>
-        </div>
-
-        <!-- Right Column: Newsletter sign-up (No Nasties storytelling) -->
-        <div>
-          <h4 class="footer-column-title">Join the Cause</h4>
-          <p class="footer-brand-desc" style="font-size: 0.85rem; margin-bottom: 0.5rem;">
-            Sign up for 3x carbon offset updates, clothing drops, and sustainable living guidelines.
-          </p>
-          <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Subscribed successfully!');">
-            <input type="email" class="newsletter-input" placeholder="Enter your email" required aria-label="Email address">
-            <button type="submit" class="newsletter-btn">Join</button>
-          </form>
-        </div>
-
       </div>
 
-      <!-- Bottom bar -->
-      <div class="footer-bottom">
-        <p>© 2026 YAHUUU. Handcrafted in India. All Rights Reserved.</p>
-        <div style="display: flex; gap: var(--spacing-md);">
-          <a href="#" class="footer-link" style="font-size: 0.8rem;">Terms of Service</a>
-          <a href="#" class="footer-link" style="font-size: 0.8rem;">Privacy Policy</a>
+      <!-- Divider with Pill -->
+      <div class="footer-divider-wrapper">
+        <hr class="footer-divider">
+        <a href="shop.php" class="footer-pill-btn">Get Started</a>
+      </div>
+
+      <!-- Bottom Info -->
+      <div class="footer-bottom-info">
+        <p class="footer-legal-desc">
+          From hand-spinning the yarn to intricate embroidery, our expert team is here to elevate your wardrobe and connect you with authentic Indian heritage.
+        </p>
+        <div class="footer-legal-links">
+          <a href="#">TERMS & CONDITIONS</a>
+          <a href="#">PRIVACY POLICY</a>
         </div>
       </div>
+    </div>
+    
+    <!-- Massive Odometer Text -->
+    <div class="footer-massive-text-slot" id="footer-massive-text">
+      ETHNIC
     </div>
   </footer>
 
