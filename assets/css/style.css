@@ -183,9 +183,7 @@ h4 { font-size: 1.25rem; }
 }
 .navbar-wrapper.scrolled { box-shadow: var(--shadow-sm); }
 .navbar-wrapper.homepage-nav {
-  position: fixed;
-  top: 40px;
-  left: 0; right: 0;
+  margin-bottom: -72px;
   background: transparent;
   border-bottom-color: transparent;
 }

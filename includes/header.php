@@ -5,7 +5,7 @@ $isHome = ($currentPage === 'index');
 $navTheme = $isHome ? 'homepage-nav' : '';
 
 // Dynamic base path (works in subdirectories too)
-$base = '/yahuuu/';
+$base = ''; // Dynamic base path (works in root or subdirectories)
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -1,4 +1,4 @@
-<?php $base = '/yahuuu/'; ?>
+<?php $base = ''; ?>
 <!-- NEWSLETTER SECTION -->
 <section class="newsletter-section">
   <div class="eyebrow mb-md">Stay Connected</div>
@@ -126,7 +126,7 @@ function vastramUpdateUI() {
   if (!vastramCart.length) {
     if (emptyState) emptyState.style.display = '';
     if (footer) footer.style.display = 'none';
-    if (drawerItems) drawerItems.innerHTML = `<div class="cart-empty" id="cart-empty-state"><div class="cart-empty-icon">🛍️</div><p style="font-family:var(--font-display);font-size:1.2rem;margin-bottom:.5rem;">Your bag is empty</p><p style="font-size:.85rem;color:var(--color-charcoal-muted);margin-bottom:1.5rem;">Add some ethnic elegance to your wardrobe.</p><a href="/yahuuu/shop.php" class="btn btn-primary btn-sm">Browse Collection</a></div>`;
+    if (drawerItems) drawerItems.innerHTML = `<div class="cart-empty" id="cart-empty-state"><div class="cart-empty-icon">🛍️</div><p style="font-family:var(--font-display);font-size:1.2rem;margin-bottom:.5rem;">Your bag is empty</p><p style="font-size:.85rem;color:var(--color-charcoal-muted);margin-bottom:1.5rem;">Add some ethnic elegance to your wardrobe.</p><a href="<?php echo $base; ?>shop.php" class="btn btn-primary btn-sm">Browse Collection</a></div>`;
     return;
   }
   if (footer) footer.style.display = '';
