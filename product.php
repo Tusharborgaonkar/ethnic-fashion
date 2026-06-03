@@ -1,278 +1,272 @@
-<?php
-// Dynamic product database array
-$products = [
-    'organic-tee' => [
-        'id' => 'organic-tee',
-        'title' => 'Handloom Cotton Kurta',
-        'price' => 1499,
-        'category' => 'Organic Cotton Kurtas',
-        'desc' => 'Our signature daily wear kurta is handcrafted from 100% GOTS certified handloom cotton. Features a relaxed straight fit, traditional wooden button trims, and a carbon neutral footprint offset by 3x.',
-        'images' => [
-            'assets/img/product-tee.png',
-            'assets/img/product-hoodie.png',
-            'assets/img/product-pants.png'
-        ],
-        'colors' => [
-            'Sage Green' => '#A2B29F',
-            'Warm Sand' => '#E8D3C9'
-        ],
-        'sizes' => ['S', 'M', 'L']
-    ],
-    'linen-pants' => [
-        'id' => 'linen-pants',
-        'title' => 'Banarasi Silk Dupatta',
-        'price' => 2499,
-        'category' => 'Banarasi Silk Dupattas',
-        'desc' => 'Premium heritage dupatta hand-woven in Banaras from organic spun silk. Features subtle gold zari floral borders, natural textured weave, and clean selvedge finishing.',
-        'images' => [
-            'assets/img/product-pants.png',
-            'assets/img/product-tee.png',
-            'assets/img/product-hoodie.png'
-        ],
-        'colors' => [
-            'Cream' => '#FAF9F6',
-            'Charcoal Black' => '#2F3E46'
-        ],
-        'sizes' => ['M', 'L', 'XL']
-    ],
-    'heavy-hoodie' => [
-        'id' => 'heavy-hoodie',
-        'title' => 'Artisan Chanderi Jacket',
-        'price' => 3999,
-        'category' => 'Artisan Jackets',
-        'desc' => 'A structured overlay jacket handcrafted from authentic 450gsm Chanderi organic cotton-silk blend. Features hand-printed block motifs, side vents, and clean cotton inner lining.',
-        'images' => [
-            'assets/img/product-hoodie.png',
-            'assets/img/product-pants.png',
-            'assets/img/product-tee.png'
-        ],
-        'colors' => [
-            'Charcoal' => '#222222',
-            'Warm Sand' => '#E8D3C9'
-        ],
-        'sizes' => ['S', 'M', 'L']
-    ]
+<?php 
+// Mock product data mapping
+$productId = isset($_GET['id']) ? $_GET['id'] : 'sage-kurta';
+
+$productData = [
+  'royal-sherwani' => [
+    'title' => 'Royal Zardozi Sherwani',
+    'price' => 7499,
+    'cat' => 'Wedding Sherwani',
+    'desc' => 'A magnificent ivory and gold sherwani crafted for the modern groom. Featuring intricate hand-embroidered zardozi work by master artisans in Banaras, this piece exudes regal elegance. The tailored fit ensures a majestic silhouette.',
+    'images' => ['assets/img/product-sherwani-gold.png', 'assets/img/hero-sherwani.png', 'assets/img/product-kurta-cream.png', 'assets/img/product-kurta-maroon.png'],
+    'colors' => [['name' => 'Ivory Gold', 'hex' => '#F5EBD5'], ['name' => 'Maroon', 'hex' => '#7B1F1F']]
+  ],
+  'sage-kurta' => [
+    'title' => 'Handloom Cotton Kurta',
+    'price' => 1799,
+    'cat' => 'Handloom Kurta',
+    'desc' => 'Woven from 100% GOTS certified organic cotton, this sage green kurta offers breathable comfort and timeless style. Features subtle thread embroidery along the placket and cuffs. Perfect for festive gatherings or smart casual occasions.',
+    'images' => ['assets/img/product-kurta-sage.png', 'assets/img/product-kurta-cream.png', 'assets/img/product-kurta-maroon.png', 'assets/img/hero-kurta.png'],
+    'colors' => [['name' => 'Sage Green', 'hex' => '#8FA98C'], ['name' => 'Ivory', 'hex' => '#FAF4EC']]
+  ],
+  'navy-nehru' => [
+    'title' => 'Heritage Linen Nehru Jacket',
+    'price' => 3299,
+    'cat' => 'Nehru Jacket',
+    'desc' => 'Elevate your ethnic ensemble with this sharply tailored navy blue Nehru jacket. Cut from premium pure linen, it features a classic mandarin collar, welt pockets, and custom brass buttons. Versatile enough to pair with kurtas or formal shirts.',
+    'images' => ['assets/img/product-nehru-navy.png', 'assets/img/product-indo-western.png', 'assets/img/product-kurta-sage.png', 'assets/img/hero-kurta.png'],
+    'colors' => [['name' => 'Navy Blue', 'hex' => '#1C3557'], ['name' => 'Deep Olive', 'hex' => '#3D4432']]
+  ]
 ];
 
-// Read routing parameter
-$prodId = isset($_GET['id']) ? $_GET['id'] : 'organic-tee';
-
-// Default routing fallback
-if (!array_key_exists($prodId, $products)) {
-    $prodId = 'organic-tee';
+// Fallback to sage kurta if ID not found
+if(!isset($productData[$productId])) {
+    $productId = 'sage-kurta';
 }
 
-$product = $products[$prodId];
+$product = $productData[$productId];
+$primaryImg = $product['images'][0];
+
+include 'includes/header.php'; 
 ?>
 
-<?php include 'includes/header.php'; ?>
-
-<!-- MAIN PRODUCT DISPLAY (MudAura Column Structure + SuperYou Buttons) -->
-<main class="container" style="padding-top: 150px; padding-bottom: var(--spacing-xl); background-color: var(--bg-offwhite);">
-  <div class="product-page-grid">
-    
-    <!-- LEFT COLUMN: IMAGE GALLERY -->
-    <div class="product-gallery">
-      <!-- Main view -->
-      <div class="gallery-main fade-up-trigger">
-        <img src="<?php echo $product['images'][0]; ?>" id="main-product-img" alt="<?php echo $product['title']; ?>">
-      </div>
-      <!-- Thumbnails list -->
-      <div class="gallery-thumbs fade-up-trigger">
-        <?php foreach ($product['images'] as $index => $imgUrl): ?>
-          <div class="gallery-thumb <?php echo $index === 0 ? 'active' : ''; ?>" onclick="changeMainImage(this, '<?php echo $imgUrl; ?>')">
-            <img src="<?php echo $imgUrl; ?>" alt="Thumbnail <?php echo $index + 1; ?>">
-          </div>
-        <?php endforeach; ?>
-      </div>
+<div style="background:var(--bg-page);padding-top:120px;">
+  <div class="container">
+    <div class="breadcrumb fade-up">
+      <a href="index.php">Home</a> <span class="breadcrumb-sep">/</span> <a href="shop.php">Shop</a> <span class="breadcrumb-sep">/</span> <span><?php echo $product['title']; ?></span>
     </div>
 
-    <!-- RIGHT COLUMN: STICKY PURCHASE PANEL -->
-    <div class="product-sticky-details">
-      <!-- Category breadcrumb -->
-      <span class="product-category-eyebrow"><?php echo $product['category']; ?></span>
-      
-      <!-- Title & Price (SuperYou bold text look) -->
-      <h2 style="font-size: 2.5rem; text-transform: uppercase; margin-bottom: 4px;"><?php echo $product['title']; ?></h2>
-      <div class="product-price-large">₹<?php echo number_format($product['price'], 2); ?></div>
+    <div class="product-page-grid fade-up stagger-1 mb-xl">
+      <!-- Left: Images -->
+      <div class="product-gallery">
+        <div class="gallery-main" id="main-image-container">
+          <img src="<?php echo $primaryImg; ?>" alt="<?php echo $product['title']; ?>" id="main-image">
+        </div>
+        <div class="gallery-thumbs">
+          <?php foreach($product['images'] as $index => $img): ?>
+          <div class="gallery-thumb <?php echo $index === 0 ? 'active' : ''; ?>" onclick="changeImage('<?php echo $img; ?>', this)">
+            <img src="<?php echo $img; ?>" alt="Thumbnail <?php echo $index+1; ?>">
+          </div>
+          <?php endforeach; ?>
+        </div>
+      </div>
 
-      <!-- Description excerpt -->
-      <p class="product-description-excerpt"><?php echo $product['desc']; ?></p>
-
-      <hr style="border: 0; border-top: 1px solid var(--color-border); margin: var(--spacing-xs) 0;">
-
-      <!-- VARIANT SELECTORS Form state -->
-      <div style="display: flex; flex-direction: column; gap: var(--spacing-md);">
+      <!-- Right: Details -->
+      <div class="product-sticky-details">
+        <span class="product-category-eyebrow"><?php echo $product['cat']; ?></span>
+        <h1 style="font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);line-height:1.1;color:var(--color-charcoal);"><?php echo $product['title']; ?></h1>
+        <div class="product-price-large">₹<?php echo number_format($product['price'], 2); ?></div>
         
-        <!-- Color swatches -->
-        <div class="option-selector-wrap">
-          <span class="option-label">Color: <strong id="selected-color-label"><?php echo key($product['colors']); ?></strong></span>
+        <p class="product-description-excerpt"><?php echo $product['desc']; ?></p>
+        
+        <!-- Swatches -->
+        <div style="margin-top:1.5rem;">
+          <span class="option-label">Color: <span id="color-label" style="color:var(--color-charcoal);"><?php echo $product['colors'][0]['name']; ?></span></span>
           <div class="option-swatches-row">
-            <?php $firstColor = true; ?>
-            <?php foreach ($product['colors'] as $colorName => $colorHex): ?>
-              <span 
-                class="color-swatch-large <?php echo $firstColor ? 'active' : ''; ?>" 
-                style="background-color: <?php echo $colorHex; ?>;" 
-                title="<?php echo $colorName; ?>"
-                onclick="selectColor(this, '<?php echo $colorName; ?>')">
-              </span>
-              <?php $firstColor = false; ?>
+            <?php foreach($product['colors'] as $index => $color): ?>
+            <div class="color-swatch-large <?php echo $index === 0 ? 'active' : ''; ?>" 
+                 style="background:<?php echo $color['hex']; ?>;" 
+                 onclick="selectColor(this, '<?php echo $color['name']; ?>')"
+                 title="<?php echo $color['name']; ?>"></div>
             <?php endforeach; ?>
           </div>
         </div>
 
-        <!-- Size Selection pills -->
-        <div class="option-selector-wrap">
-          <span class="option-label">Size: <strong id="selected-size-label"><?php echo $product['sizes'][0]; ?></strong></span>
+        <!-- Sizes -->
+        <div style="margin-top:1.5rem;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span class="option-label">Size: <span id="size-label" style="color:var(--color-charcoal);">M (38)</span></span>
+            <button style="background:none;border:none;font-size:0.75rem;text-decoration:underline;color:var(--color-charcoal-muted);cursor:pointer;">Size Guide</button>
+          </div>
           <div class="option-swatches-row">
-            <?php foreach ($product['sizes'] as $index => $sizeVal): ?>
-              <button 
-                class="option-size-pill <?php echo $index === 0 ? 'active' : ''; ?>"
-                onclick="selectSize(this, '<?php echo $sizeVal; ?>')">
-                <?php echo $sizeVal; ?>
-              </button>
-            <?php endforeach; ?>
+            <button class="option-size-pill" onclick="selectSize(this, 'S')">S</button>
+            <button class="option-size-pill active" onclick="selectSize(this, 'M')">M</button>
+            <button class="option-size-pill" onclick="selectSize(this, 'L')">L</button>
+            <button class="option-size-pill" onclick="selectSize(this, 'XL')">XL</button>
+            <button class="option-size-pill unavailable">XXL</button>
           </div>
         </div>
 
-        <!-- Quantity and Action Buttons Row -->
-        <div class="option-selector-wrap">
-          <span class="option-label">Quantity</span>
-          <div class="buy-actions-wrapper">
-            <!-- Counter block -->
-            <div class="qty-input-group">
-              <button class="qty-btn" onclick="changeProductQuantity(-1)">-</button>
-              <span class="qty-val" id="product-qty-val">1</span>
-              <button class="qty-btn" onclick="changeProductQuantity(1)">+</button>
-            </div>
-            
-            <!-- Animated Add to Cart Button (GSAP feedback trigger) -->
-            <button class="btn btn-primary" id="add-to-cart-action-btn" onclick="triggerAddToCart()">
-              Add to Bag
-              <span class="btn-spinner"></span>
+        <!-- Add to Bag -->
+        <div class="buy-actions-wrapper" style="margin-top:2rem;">
+          <div class="qty-input-group">
+            <button class="qty-btn" onclick="updateLocalQty(-1)">−</button>
+            <span class="qty-val" id="pd-qty">1</span>
+            <button class="qty-btn" onclick="updateLocalQty(1)">+</button>
+          </div>
+          <button class="btn btn-primary btn-full btn-lg" id="add-to-cart-btn" style="height:48px;" onclick="addCurrentToCart()">Add to Bag — ₹<?php echo number_format($product['price'], 2); ?></button>
+        </div>
+        
+        <div style="margin-top:1.5rem;font-size:0.8rem;color:var(--color-charcoal-muted);display:flex;align-items:center;gap:8px;">
+          <i data-lucide="truck" style="width:16px;height:16px;"></i> Complimentary shipping on this order.
+        </div>
+
+        <!-- Accordions -->
+        <div class="product-accords-wrapper">
+          <div class="accord-item active">
+            <button class="accord-trigger" onclick="toggleAccord(this)">
+              Product Details <span class="accord-icon">+</span>
             </button>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- DESCRIPTION ACCORDIONS (Mudaura Accordion panels) -->
-      <div class="product-accords-wrapper">
-        <!-- Item 1 -->
-        <div class="accord-item active">
-          <button class="accord-trigger">
-            <span>Product Details</span>
-            <span class="accord-icon">+</span>
-          </button>
-          <div class="accord-content" style="max-height: 200px;">
-            <div class="accord-content-inner">
-              Our organic cotton fabrics are GOTS (Global Organic Textile Standard) certified. Woven with double-twisted ringspun yarn for maximum structural integrity and comfort.
-              <ul>
-                <li>Carbon zero supply chain</li>
-                <li>Low-impact water-based organic dyes</li>
-                <li>Made ethically in Jaipur, India</li>
-              </ul>
+            <div class="accord-content" style="max-height:500px;">
+              <div class="accord-content-inner">
+                <p>Designed for unparalleled elegance, this garment represents the pinnacle of Indian craftsmanship.</p>
+                <ul>
+                  <li>100% Handloom Fabric</li>
+                  <li>Intricate artisan embroidery</li>
+                  <li>Tailored comfort fit</li>
+                  <li>Ethically sourced materials</li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
-
-        <!-- Item 2 -->
-        <div class="accord-item">
-          <button class="accord-trigger">
-            <span>Sizing & Fit</span>
-            <span class="accord-icon">+</span>
-          </button>
-          <div class="accord-content">
-            <div class="accord-content-inner">
-              Designed with a standard unisex fit. For men, we recommend purchasing your true size. For women looking for a structured standard fit, we recommend ordering one size down.
+          <div class="accord-item">
+            <button class="accord-trigger" onclick="toggleAccord(this)">
+              Care Instructions <span class="accord-icon">+</span>
+            </button>
+            <div class="accord-content">
+              <div class="accord-content-inner">
+                <ul>
+                  <li>Dry clean only for embellished pieces</li>
+                  <li>Do not bleach or tumble dry</li>
+                  <li>Warm iron on reverse side</li>
+                  <li>Store in a breathable cotton garment bag</li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
-
-        <!-- Item 3 -->
-        <div class="accord-item">
-          <button class="accord-trigger">
-            <span>Care Instructions</span>
-            <span class="accord-icon">+</span>
-          </button>
-          <div class="accord-content">
-            <div class="accord-content-inner">
-              Machine wash cold with mild organic detergents. Do not bleach. Tumble dry low or air dry naturally in the shade to maintain textile strength. Warm iron if necessary.
+          <div class="accord-item">
+            <button class="accord-trigger" onclick="toggleAccord(this)">
+              Shipping & Returns <span class="accord-icon">+</span>
+            </button>
+            <div class="accord-content">
+              <div class="accord-content-inner">
+                <p><strong>Shipping:</strong> Dispatched within 48 hours. Delivery in 3-5 business days across India.</p>
+                <p><strong>Returns:</strong> 7-day hassle-free returns for unworn items with tags intact. Custom tailored items are non-refundable.</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
     </div>
   </div>
-</main>
+</div>
 
-<!-- In-page gallery & swatches controllers -->
+<!-- RELATED PRODUCTS -->
+<section class="section-padding" style="background:var(--bg-offwhite);border-top:1px solid var(--color-border);">
+  <div class="container">
+    <div class="text-center mb-md fade-up">
+      <h2 style="font-family:var(--font-display);font-size:2rem;">Complete the Look</h2>
+    </div>
+    <div class="product-shelf-wrapper fade-up stagger-1" style="display:flex;justify-content:center;">
+      <div class="product-shelf">
+        <!-- Reusing mock product card structure -->
+        <div class="product-card" style="min-width:260px;">
+          <div class="product-card-img-wrap">
+            <a href="product.php?id=maroon-silk"><img src="assets/img/product-kurta-maroon.png" alt="Maroon Silk"></a>
+          </div>
+          <div class="product-card-info">
+            <div class="product-card-title">Maroon Silk Thread Kurta</div>
+            <div class="product-card-price">₹2,399.00</div>
+          </div>
+        </div>
+        <div class="product-card" style="min-width:260px;">
+          <div class="product-card-img-wrap">
+            <a href="product.php?id=sage-kurta"><img src="assets/img/product-kurta-sage.png" alt="Sage Kurta"></a>
+          </div>
+          <div class="product-card-info">
+            <div class="product-card-title">Handloom Cotton Kurta</div>
+            <div class="product-card-price">₹1,799.00</div>
+          </div>
+        </div>
+        <div class="product-card" style="min-width:260px;">
+          <div class="product-card-img-wrap">
+            <a href="product.php?id=cream-chikankari"><img src="assets/img/product-kurta-cream.png" alt="Cream Kurta"></a>
+          </div>
+          <div class="product-card-info">
+            <div class="product-card-title">Lucknawi Chikankari Kurta</div>
+            <div class="product-card-price">₹2,199.00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <script>
-let currentProductQty = 1;
-let selectedProductSize = "<?php echo $product['sizes'][0]; ?>";
-let selectedProductColor = "<?php echo key($product['colors']); ?>";
+let pdSelectedColor = '<?php echo $product['colors'][0]['name']; ?>';
+let pdSelectedSize = 'M';
+let pdQty = 1;
+const pdBasePrice = <?php echo $product['price']; ?>;
 
-// Dynamic Main image switcher
-function changeMainImage(thumbEl, imgUrl) {
-  // Reset active classes
-  document.querySelectorAll(".gallery-thumb").forEach(t => t.classList.remove("active"));
-  // Add class
-  thumbEl.classList.add("active");
-  // Set main source
-  document.getElementById("main-product-img").src = imgUrl;
+function changeImage(src, thumb) {
+  document.getElementById('main-image').src = src;
+  document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
+  thumb.classList.add('active');
 }
 
-// Swatch Color selector
-function selectColor(swatchEl, colorName) {
-  document.querySelectorAll(".color-swatch-large").forEach(s => s.classList.remove("active"));
-  swatchEl.classList.add("active");
-  document.getElementById("selected-color-label").textContent = colorName;
-  selectedProductColor = colorName;
+function selectColor(el, name) {
+  document.querySelectorAll('.color-swatch-large').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('color-label').textContent = name;
+  pdSelectedColor = name;
 }
 
-// Size selector
-function selectSize(sizeEl, sizeVal) {
-  document.querySelectorAll(".option-size-pill").forEach(s => s.classList.remove("active"));
-  sizeEl.classList.add("active");
-  document.getElementById("selected-size-label").textContent = sizeVal;
-  selectedProductSize = sizeVal;
+function selectSize(el, size) {
+  document.querySelectorAll('.option-size-pill').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('size-label').textContent = size;
+  pdSelectedSize = size;
 }
 
-// Quantity Counter
-function changeProductQuantity(delta) {
-  currentProductQty += delta;
-  if (currentProductQty < 1) currentProductQty = 1;
-  document.getElementById("product-qty-val").textContent = currentProductQty;
+function updateLocalQty(delta) {
+  pdQty = Math.max(1, pdQty + delta);
+  document.getElementById('pd-qty').textContent = pdQty;
+  document.getElementById('add-to-cart-btn').innerHTML = `Add to Bag — ₹${(pdBasePrice * pdQty).toLocaleString('en-IN')}.00`;
 }
 
-// Trigger Add to Cart with loader animation
-function triggerAddToCart() {
-  const btn = document.getElementById("add-to-cart-action-btn");
-  if (!btn) return;
+function toggleAccord(btn) {
+  const item = btn.closest('.accord-item');
+  const content = item.querySelector('.accord-content');
+  const isActive = item.classList.contains('active');
   
-  // Show Loading Spinner state
-  btn.classList.add("loading");
+  // Close all
+  document.querySelectorAll('.accord-item').forEach(i => {
+    i.classList.remove('active');
+    i.querySelector('.accord-content').style.maxHeight = null;
+  });
   
-  // Mock async loading delay (Arih-style feedback)
+  if (!isActive) {
+    item.classList.add('active');
+    content.style.maxHeight = content.scrollHeight + "px";
+  }
+}
+
+function addCurrentToCart() {
+  const btn = document.getElementById('add-to-cart-btn');
+  btn.classList.add('loading');
+  
   setTimeout(() => {
-    btn.classList.remove("loading");
-    
-    // Trigger global yahuuuAddToCart
-    window.yahuuuAddToCart({
-      id: "<?php echo $product['id']; ?>",
-      title: "<?php echo $product['title']; ?>",
-      price: <?php echo $product['price']; ?>,
-      image: "<?php echo $product['images'][0]; ?>",
-      size: selectedProductSize,
-      color: selectedProductColor,
-      quantity: currentProductQty
+    btn.classList.remove('loading');
+    vastramAddToCart({
+      id: '<?php echo $productId; ?>',
+      title: '<?php echo $product['title']; ?>',
+      price: pdBasePrice,
+      image: '<?php echo $primaryImg; ?>',
+      size: pdSelectedSize,
+      color: pdSelectedColor,
+      quantity: pdQty
     });
-    
-    // Reset quantity input
-    currentProductQty = 1;
-    document.getElementById("product-qty-val").textContent = currentProductQty;
-  }, 800);
+  }, 500);
 }
 </script>
 

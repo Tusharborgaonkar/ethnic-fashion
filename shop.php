@@ -1,265 +1,140 @@
-<?php include 'includes/header.php'; ?>
+<?php 
+// Mock product data for the shop
+$category = isset($_GET['cat']) ? htmlspecialchars($_GET['cat']) : 'all';
 
-<!-- SHOP HEADER -->
-<section class="section-padding" style="padding-top: 140px; background-color: var(--bg-sage);">
+$products = [
+  ['id' => 'royal-sherwani', 'title' => 'Royal Zardozi Sherwani', 'price' => 7499, 'img' => 'assets/img/product-sherwani-gold.png', 'cat' => 'sherwanis', 'badge' => 'Only 3 Left', 'badgeClass' => 'low'],
+  ['id' => 'sage-kurta', 'title' => 'Handloom Cotton Kurta', 'price' => 1799, 'img' => 'assets/img/product-kurta-sage.png', 'cat' => 'kurtas', 'badge' => 'New Arrival', 'badgeClass' => 'new'],
+  ['id' => 'navy-nehru', 'title' => 'Heritage Linen Nehru Jacket', 'price' => 3299, 'img' => 'assets/img/product-nehru-navy.png', 'cat' => 'nehru', 'badge' => '', 'badgeClass' => ''],
+  ['id' => 'maroon-silk', 'title' => 'Maroon Silk Thread Kurta', 'price' => 2399, 'original_price' => 2999, 'img' => 'assets/img/product-kurta-maroon.png', 'cat' => 'kurtas', 'badge' => '20% Off', 'badgeClass' => 'sale'],
+  ['id' => 'indo-western-jacket', 'title' => 'Mandarin Collar Fusion Jacket', 'price' => 4599, 'img' => 'assets/img/product-indo-western.png', 'cat' => 'indo-western', 'badge' => '', 'badgeClass' => ''],
+  ['id' => 'cream-chikankari', 'title' => 'Lucknawi Chikankari Kurta', 'price' => 2199, 'img' => 'assets/img/product-kurta-cream.png', 'cat' => 'kurtas', 'badge' => 'Artisan Pick', 'badgeClass' => 'new']
+];
+
+// Duplicate products to fill the grid for demo purposes
+$allProducts = array_merge($products, $products);
+
+$filtered = [];
+if ($category === 'all') {
+    $filtered = $allProducts;
+} else {
+    foreach ($allProducts as $p) {
+        if ($p['cat'] === $category) {
+            $filtered[] = $p;
+        }
+    }
+}
+$pageTitle = 'Shop Collection';
+if ($category === 'kurtas') $pageTitle = 'Handloom Kurtas';
+if ($category === 'sherwanis') $pageTitle = 'Wedding Sherwanis';
+if ($category === 'nehru') $pageTitle = 'Nehru Jackets';
+if ($category === 'indo-western') $pageTitle = 'Indo-Western Fusion';
+if ($category === 'wedding') $pageTitle = 'Wedding Wear';
+if ($category === 'festive') $pageTitle = 'Festive Collection';
+
+include 'includes/header.php'; 
+?>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
   <div class="container">
-    <div style="max-width: 600px;">
-      <span class="brand-serif-italic" style="font-size: 1.2rem; color: var(--color-accent-green);">GOTS Certified Heritage</span>
-      <h1 class="reveal-text" style="line-height: 0.9;">Handcrafted Heritage</h1>
-      <p style="margin-top: var(--spacing-sm);">
-        Browse our carbon-negative wardrobe essentials. 100% organic cotton, hand-spun silk, and natural artisan vegetable dyes.
-      </p>
+    <div class="breadcrumb" style="justify-content:center;">
+      <a href="index.php">Home</a> <span class="breadcrumb-sep">/</span> <span>Shop</span> <?php if($category !== 'all'): ?><span class="breadcrumb-sep">/</span> <span><?php echo $pageTitle; ?></span><?php endif; ?>
     </div>
+    <h1><?php echo $pageTitle; ?></h1>
+    <p style="color:rgba(255,255,255,.7);max-width:600px;margin:1rem auto 0;font-size:0.95rem;">Explore our meticulously handcrafted collection of men's ethnic wear. Each piece is woven with India's rich heritage and designed for the modern gentleman.</p>
   </div>
-</section>
+</div>
 
-<!-- MAIN SHOP GRID & FILTERS -->
-<section class="section-padding" style="background-color: var(--bg-offwhite);">
+<section class="section-padding" style="background:var(--bg-page);">
   <div class="container">
     
-    <!-- Filter and Sort Header Bar -->
-    <div class="filters-bar">
+    <!-- FILTERS -->
+    <div class="filters-bar fade-up">
       <div class="filters-group">
-        <!-- Category selector -->
-        <select class="filter-select" id="category-filter" aria-label="Filter by category">
-          <option value="all">All Items</option>
-          <option value="tee">Handloom Kurtas</option>
-          <option value="pants">Silk Dupattas</option>
-          <option value="hoodie">Artisan Jackets</option>
+        <select class="filter-select" onchange="window.location.href='shop.php?cat='+this.value">
+          <option value="all" <?php echo $category==='all'?'selected':''; ?>>All Categories</option>
+          <option value="kurtas" <?php echo $category==='kurtas'?'selected':''; ?>>Kurtas</option>
+          <option value="sherwanis" <?php echo $category==='sherwanis'?'selected':''; ?>>Sherwanis</option>
+          <option value="nehru" <?php echo $category==='nehru'?'selected':''; ?>>Nehru Jackets</option>
+          <option value="indo-western" <?php echo $category==='indo-western'?'selected':''; ?>>Indo-Western</option>
         </select>
-
-        <!-- Color selector -->
-        <select class="filter-select" id="color-filter" aria-label="Filter by color">
-          <option value="all">All Colors</option>
-          <option value="sage">Sage Green</option>
-          <option value="sand">Warm Sand</option>
-          <option value="cream">Cream</option>
-          <option value="charcoal">Charcoal</option>
+        <select class="filter-select desktop-only">
+          <option>Size: All</option>
+          <option>S (36)</option>
+          <option>M (38)</option>
+          <option>L (40)</option>
+          <option>XL (42)</option>
+        </select>
+        <select class="filter-select desktop-only">
+          <option>Color: All</option>
+          <option>Ivory / Gold</option>
+          <option>Navy / Charcoal</option>
+          <option>Earth / Terracotta</option>
         </select>
       </div>
-
-      <!-- Sorting -->
-      <div>
-        <select class="filter-select" id="sort-select" aria-label="Sort products">
-          <option value="default">Sort: Default</option>
-          <option value="price-asc">Price: Low to High</option>
-          <option value="price-desc">Price: High to Low</option>
+      <div class="filters-group">
+        <select class="filter-select">
+          <option>Sort: Recommended</option>
+          <option>Newest Arrivals</option>
+          <option>Price: Low to High</option>
+          <option>Price: High to Low</option>
         </select>
       </div>
     </div>
-
-    <!-- Product Grid container (Cascade entries) -->
-    <div class="grid grid-cols-3 grid-cascade" id="shop-product-grid">
-      
-      <!-- Product 1 -->
-      <div class="product-card" data-category="tee" data-color="sage" data-price="1499">
-        <span class="stock-tag low">Only 4 Left</span>
-        <div class="product-card-img-wrap">
-          <a href="product.php?id=organic-tee">
-            <img src="assets/img/product-tee.png" alt="Handloom Cotton Kurta - Sage Green">
-            <img src="assets/img/product-hoodie.png" alt="Alternate view" class="product-card-img-hover">
-          </a>
-          <div class="product-card-overlay">
-            <div class="product-card-sizes">
-              <button class="card-size-btn" onclick="yahuuuAddToCart({id: 'organic-tee', title: 'Handloom Cotton Kurta', price: 1499, image: 'assets/img/product-tee.png', size: 'S', color: 'Sage Green'})">S</button>
-              <button class="card-size-btn" onclick="yahuuuAddToCart({id: 'organic-tee', title: 'Handloom Cotton Kurta', price: 1499, image: 'assets/img/product-tee.png', size: 'M', color: 'Sage Green'})">M</button>
-              <button class="card-size-btn" onclick="yahuuuAddToCart({id: 'organic-tee', title: 'Handloom Cotton Kurta', price: 1499, image: 'assets/img/product-tee.png', size: 'L', color: 'Sage Green'})">L</button>
-            </div>
-          </div>
-        </div>
-        <div class="product-card-info">
-          <a href="product.php?id=organic-tee"><h4 class="product-card-title">Handloom Cotton Kurta - Sage</h4></a>
-          <div class="product-card-price">₹1,499.00</div>
-          <div class="product-card-swatches">
-            <span class="swatch active" style="background-color: #A2B29F;" title="Sage Green" onclick="location.href='product.php?id=organic-tee'"></span>
-            <span class="swatch" style="background-color: #E8D3C9;" title="Warm Sand" onclick="location.href='product.php?id=organic-tee'"></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Product 2 -->
-      <div class="product-card" data-category="tee" data-color="sand" data-price="1499">
-        <span class="stock-tag in-stock">Eco Best</span>
-        <div class="product-card-img-wrap">
-          <a href="product.php?id=organic-tee">
-            <img src="assets/img/product-pants.png" alt="Handloom Cotton Kurta - Warm Sand">
-            <img src="assets/img/product-tee.png" alt="Alternate view" class="product-card-img-hover">
-          </a>
-          <div class="product-card-overlay">
-            <div class="product-card-sizes">
-              <button class="card-size-btn" onclick="yahuuuAddToCart({id: 'organic-tee-sand', title: 'Handloom Cotton Kurta - Sand', price: 1499, image: 'assets/img/product-pants.png', size: 'S', color: 'Warm Sand'})">S</button>
-              <button class="card-size-btn" onclick="yahuuuAddToCart({id: 'organic-tee-sand', title: 'Handloom Cotton Kurta - Sand', price: 1499, image: 'assets/img/product-pants.png', size: 'M', color: 'Warm Sand'})">M</button>
-              <button class="card-size-btn" onclick="yahuuuAddToCart({id: 'organic-tee-sand', title: 'Handloom Cotton Kurta - Sand', price: 1499, image: 'assets/img/product-pants.png', size: 'L', color: 'Warm Sand'})">L</button>
-            </div>
-          </div>
-        </div>
-        <div class="product-card-info">
-          <a href="product.php?id=organic-tee"><h4 class="product-card-title">Handloom Cotton Kurta - Sand</h4></a>
-          <div class="product-card-price">₹1,499.00</div>
-          <div class="product-card-swatches">
-            <span class="swatch" style="background-color: #A2B29F;" title="Sage Green" onclick="location.href='product.php?id=organic-tee'"></span>
-            <span class="swatch active" style="background-color: #E8D3C9;" title="Warm Sand" onclick="location.href='product.php?id=organic-tee'"></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Product 3 -->
-      <div class="product-card" data-category="pants" data-color="cream" data-price="2499">
-        <span class="stock-tag in-stock">Artisan Made</span>
-        <div class="product-card-img-wrap">
-          <a href="product.php?id=linen-pants">
-            <img src="assets/img/product-pants.png" alt="Banarasi Silk Dupatta - Cream">
-            <img src="assets/img/product-tee.png" alt="Alternate view" class="product-card-img-hover">
-          </a>
-          <div class="product-card-overlay">
-            <div class="product-card-sizes">
-              <button class="card-size-btn" onclick="yahuuuAddToCart({id: 'linen-pants', title: 'Banarasi Silk Dupatta', price: 2499, image: 'assets/img/product-pants.png', size: 'M', color: 'Cream'})">M</button>
-              <button class="card-size-btn" onclick="yahuuuAddToCart({id: 'linen-pants', title: 'Banarasi Silk Dupatta', price: 2499, image: 'assets/img/product-pants.png', size: 'L', color: 'Cream'})">L</button>
-            </div>
-          </div>
-        </div>
-        <div class="product-card-info">
-          <a href="product.php?id=linen-pants"><h4 class="product-card-title">Banarasi Silk Dupatta - Cream</h4></a>
-          <div class="product-card-price">₹2,499.00</div>
-          <div class="product-card-swatches">
-            <span class="swatch active" style="background-color: #FAF9F6;" title="Cream" onclick="location.href='product.php?id=linen-pants'"></span>
-            <span class="swatch" style="background-color: #222222;" title="Charcoal" onclick="location.href='product.php?id=linen-pants'"></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Product 4 -->
-      <div class="product-card" data-category="pants" data-color="charcoal" data-price="2499">
-        <div class="product-card-img-wrap">
-          <a href="product.php?id=linen-pants">
-            <img src="assets/img/product-hoodie.png" alt="Banarasi Silk Dupatta - Charcoal">
-            <img src="assets/img/product-pants.png" alt="Alternate view" class="product-card-img-hover">
-          </a>
-          <div class="product-card-overlay">
-            <div class="product-card-sizes">
-              <button class="card-size-btn" onclick="yahuuuAddToCart({id: 'linen-pants-charcoal', title: 'Banarasi Silk Dupatta - Charcoal', price: 2499, image: 'assets/img/product-hoodie.png', size: 'M', color: 'Charcoal'})">M</button>
-              <button class="card-size-btn" onclick="yahuuuAddToCart({id: 'linen-pants-charcoal', title: 'Banarasi Silk Dupatta - Charcoal', price: 2499, image: 'assets/img/product-hoodie.png', size: 'L', color: 'Charcoal'})">L</button>
-            </div>
-          </div>
-        </div>
-        <div class="product-card-info">
-          <a href="product.php?id=linen-pants"><h4 class="product-card-title">Banarasi Silk Dupatta - Charcoal</h4></a>
-          <div class="product-card-price">₹2,499.00</div>
-          <div class="product-card-swatches">
-            <span class="swatch" style="background-color: #FAF9F6;" title="Cream" onclick="location.href='product.php?id=linen-pants'"></span>
-            <span class="swatch active" style="background-color: #222222;" title="Charcoal" onclick="location.href='product.php?id=linen-pants'"></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Product 5 -->
-      <div class="product-card" data-category="hoodie" data-color="charcoal" data-price="3999">
-        <span class="stock-tag low">Only 2 Left</span>
-        <div class="product-card-img-wrap">
-          <a href="product.php?id=heavy-hoodie">
-            <img src="assets/img/product-hoodie.png" alt="Artisan Chanderi Jacket - Charcoal">
-            <img src="assets/img/product-pants.png" alt="Alternate view" class="product-card-img-hover">
-          </a>
-          <div class="product-card-overlay">
-            <div class="product-card-sizes">
-              <button class="card-size-btn" onclick="yahuuuAddToCart({id: 'heavy-hoodie', title: 'Artisan Chanderi Jacket', price: 3999, image: 'assets/img/product-hoodie.png', size: 'S', color: 'Charcoal'})">S</button>
-              <button class="card-size-btn" onclick="yahuuuAddToCart({id: 'heavy-hoodie', title: 'Artisan Chanderi Jacket', price: 3999, image: 'assets/img/product-hoodie.png', size: 'M', color: 'Charcoal'})">M</button>
-              <button class="card-size-btn" onclick="yahuuuAddToCart({id: 'heavy-hoodie', title: 'Artisan Chanderi Jacket', price: 3999, image: 'assets/img/product-hoodie.png', size: 'L', color: 'Charcoal'})">L</button>
-            </div>
-          </div>
-        </div>
-        <div class="product-card-info">
-          <a href="product.php?id=heavy-hoodie"><h4 class="product-card-title">Artisan Chanderi Jacket - Charcoal</h4></a>
-          <div class="product-card-price">₹3,999.00</div>
-          <div class="product-card-swatches">
-            <span class="swatch active" style="background-color: #222222;" title="Charcoal" onclick="location.href='product.php?id=heavy-hoodie'"></span>
-            <span class="swatch" style="background-color: #E8D3C9;" title="Sand" onclick="location.href='product.php?id=heavy-hoodie'"></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Product 6 -->
-      <div class="product-card" data-category="hoodie" data-color="sand" data-price="3999">
-        <div class="product-card-img-wrap">
-          <a href="product.php?id=heavy-hoodie">
-            <img src="assets/img/product-tee.png" alt="Artisan Chanderi Jacket - Sand">
-            <img src="assets/img/product-hoodie.png" alt="Alternate view" class="product-card-img-hover">
-          </a>
-          <div class="product-card-overlay">
-            <div class="product-card-sizes">
-              <button class="card-size-btn" onclick="yahuuuAddToCart({id: 'heavy-hoodie-sand', title: 'Artisan Chanderi Jacket - Sand', price: 3999, image: 'assets/img/product-tee.png', size: 'S', color: 'Warm Sand'})">S</button>
-              <button class="card-size-btn" onclick="yahuuuAddToCart({id: 'heavy-hoodie-sand', title: 'Artisan Chanderi Jacket - Sand', price: 3999, image: 'assets/img/product-tee.png', size: 'M', color: 'Warm Sand'})">M</button>
-              <button class="card-size-btn" onclick="yahuuuAddToCart({id: 'heavy-hoodie-sand', title: 'Artisan Chanderi Jacket - Sand', price: 3999, image: 'assets/img/product-tee.png', size: 'L', color: 'Warm Sand'})">L</button>
-            </div>
-          </div>
-        </div>
-        <div class="product-card-info">
-          <a href="product.php?id=heavy-hoodie"><h4 class="product-card-title">Artisan Chanderi Jacket - Sand</h4></a>
-          <div class="product-card-price">₹3,999.00</div>
-          <div class="product-card-swatches">
-            <span class="swatch" style="background-color: #222222;" title="Charcoal" onclick="location.href='product.php?id=heavy-hoodie'"></span>
-            <span class="swatch active" style="background-color: #E8D3C9;" title="Sand" onclick="location.href='product.php?id=heavy-hoodie'"></span>
-          </div>
-        </div>
-      </div>
-
+    
+    <div style="font-size:0.8rem;color:var(--color-charcoal-muted);margin-bottom:var(--spacing-md);" class="fade-up">
+      Showing <?php echo count($filtered); ?> products
     </div>
+
+    <!-- PRODUCT GRID -->
+    <?php if(count($filtered) > 0): ?>
+    <div class="grid grid-4 fade-up stagger-1">
+      <?php foreach($filtered as $idx => $item): ?>
+      <div class="product-card">
+        <?php if($item['badge']): ?>
+        <span class="stock-tag <?php echo $item['badgeClass']; ?>"><?php echo $item['badge']; ?></span>
+        <?php endif; ?>
+        <div class="product-card-img-wrap">
+          <a href="product.php?id=<?php echo $item['id']; ?>">
+            <img src="<?php echo $item['img']; ?>" alt="<?php echo $item['title']; ?>">
+          </a>
+          <div class="product-card-overlay">
+            <div class="product-card-sizes">
+              <button class="card-size-btn" onclick="vastramAddToCart({id:'<?php echo $item['id']; ?>',title:'<?php echo $item['title']; ?>',price:<?php echo $item['price']; ?>,image:'<?php echo $item['img']; ?>',size:'S',color:'Default'})">S</button>
+              <button class="card-size-btn" onclick="vastramAddToCart({id:'<?php echo $item['id']; ?>',title:'<?php echo $item['title']; ?>',price:<?php echo $item['price']; ?>,image:'<?php echo $item['img']; ?>',size:'M',color:'Default'})">M</button>
+              <button class="card-size-btn" onclick="vastramAddToCart({id:'<?php echo $item['id']; ?>',title:'<?php echo $item['title']; ?>',price:<?php echo $item['price']; ?>,image:'<?php echo $item['img']; ?>',size:'L',color:'Default'})">L</button>
+              <button class="card-size-btn" onclick="vastramAddToCart({id:'<?php echo $item['id']; ?>',title:'<?php echo $item['title']; ?>',price:<?php echo $item['price']; ?>,image:'<?php echo $item['img']; ?>',size:'XL',color:'Default'})">XL</button>
+            </div>
+          </div>
+        </div>
+        <div class="product-card-info">
+          <div class="product-card-eyebrow"><?php echo ucfirst(str_replace('-', ' ', $item['cat'])); ?></div>
+          <a href="product.php?id=<?php echo $item['id']; ?>"><div class="product-card-title"><?php echo $item['title']; ?></div></a>
+          <div class="product-card-price">
+            <?php if(isset($item['original_price'])): ?>
+            <span class="original">₹<?php echo number_format($item['original_price'], 2); ?></span>
+            <?php endif; ?>
+            ₹<?php echo number_format($item['price'], 2); ?>
+          </div>
+        </div>
+      </div>
+      <?php endforeach; ?>
+    </div>
+    
+    <div class="flex-center" style="margin-top:var(--spacing-xl);">
+      <button class="btn btn-outline" onclick="this.classList.add('loading'); setTimeout(() => this.classList.remove('loading'), 1000);"><span class="btn-spinner"></span><span>Load More Products</span></button>
+    </div>
+    
+    <?php else: ?>
+    <div class="text-center" style="padding:var(--spacing-xl) 0;">
+      <h3 style="margin-bottom:1rem;">No products found</h3>
+      <p style="color:var(--color-charcoal-muted);margin-bottom:2rem;">Try changing your category filter.</p>
+      <a href="shop.php" class="btn btn-primary">Clear Filters</a>
+    </div>
+    <?php endif; ?>
+
   </div>
 </section>
-
-<!-- Front-end Dynamic Filters Script (Arih Instant interactions) -->
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const categoryFilter = document.getElementById("category-filter");
-  const colorFilter = document.getElementById("color-filter");
-  const sortSelect = document.getElementById("sort-select");
-  const productGrid = document.getElementById("shop-product-grid");
-  const productCards = Array.from(document.querySelectorAll(".product-card"));
-
-  function filterAndSortProducts() {
-    const cat = categoryFilter.value;
-    const col = colorFilter.value;
-    const sortVal = sortSelect.value;
-
-    // Filter
-    productCards.forEach(card => {
-      const matchesCat = (cat === "all" || card.dataset.category === cat);
-      const matchesCol = (col === "all" || card.dataset.color === col);
-      
-      if (matchesCat && matchesCol) {
-        card.style.display = "flex";
-      } else {
-        card.style.display = "none";
-      }
-    });
-
-    // Sort visible cards
-    let visibleCards = productCards.filter(card => card.style.display !== "none");
-    
-    if (sortVal === "price-asc") {
-      visibleCards.sort((a, b) => Number(a.dataset.price) - Number(b.dataset.price));
-    } else if (sortVal === "price-desc") {
-      visibleCards.sort((a, b) => Number(b.dataset.price) - Number(a.dataset.price));
-    }
-
-    // Re-append items in order to grid
-    visibleCards.forEach(card => {
-      productGrid.appendChild(card);
-    });
-
-    // Re-animate layout using GSAP cascade for smooth transition
-    if (typeof gsap !== "undefined") {
-      gsap.fromTo(visibleCards, 
-        { opacity: 0, scale: 0.95 },
-        { opacity: 1, scale: 1, duration: 0.4, stagger: 0.05, ease: "power2.out" }
-      );
-    }
-  }
-
-  categoryFilter.addEventListener("change", filterAndSortProducts);
-  colorFilter.addEventListener("change", filterAndSortProducts);
-  sortSelect.addEventListener("change", filterAndSortProducts);
-});
-</script>
 
 <?php include 'includes/footer.php'; ?>
